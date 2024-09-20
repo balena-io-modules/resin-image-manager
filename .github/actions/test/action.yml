@@ -1,0 +1,52 @@
+---
+name: test release
+# https://github.com/product-os/flowzone/tree/master/.github/actions
+inputs:
+  json:
+    description: "JSON stringified object containing all the inputs from the calling workflow"
+    required: true
+  secrets:
+    description: "JSON stringified object containing all the secrets from the calling workflow"
+    required: true
+  variables:
+    description: "JSON stringified object containing all the variables from the calling workflow"
+    required: true
+
+  # --- custom environment
+  NODE_VERSION:
+    type: string
+    default: '20.x'
+  VERBOSE:
+    type: string
+    default: "true"
+
+runs:
+  # https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+  using: "composite"
+  steps:
+    - name: Setup Node.js 20
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        if [ -e package-lock.json ]; then
+          npm ci
+        else
+          npm i
+        fi
+
+    - name: Run custom node tests
+      shell: bash
+      run: |
+        # os_value is a JSON array of runner labels but we are only looking at the first element
+        node -v
+        npm -v
+        set -ea
+
+        [[ '${{ inputs.VERBOSE }}' =~ on|On|Yes|yes|true|True ]] && set -x
+
+        npm run build
+        npm run test

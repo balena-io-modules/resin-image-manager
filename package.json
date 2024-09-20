@@ -1,7 +1,7 @@
 {
   "name": "balena-image-manager",
   "version": "10.0.1",
-  "description": "Manage device base operating systems resources with caching support",
+  "description": "Manage device base operating systems resources with caching suppor",
   "main": "build/manager.js",
   "types": "build/manager.d.ts",
   "homepage": "https://github.com/balena-io-modules/balena-image-manager",
@@ -20,14 +20,13 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "npx tsc && npm run readme",
+    "build": "npx tsc",
     "lint": "balena-lint lib",
     "lint-fix": "balena-lint --fix lib",
     "pretest": "npm run build",
     "test": "mocha -r coffeescript/register tests/**/*.spec.coffee",
     "posttest": "npm run lint",
-    "prepare": "npm run build",
-    "readme": "jsdoc2md --template doc/README.hbs build/manager.js > README.md"
+    "prepare": "npm run build"
   },
   "author": "Balena Inc. (https://balena.io/)",
   "license": "Apache-2.0",
@@ -39,10 +38,10 @@
     "@types/mime": "^2.0.3",
     "@types/mkdirp": "^1.0.1",
     "@types/node": "^18.0.0",
+    "bluebird": "^3.7.2",
     "coffeescript": "^1.12.7",
     "gulp-coffeelint": "^0.6.0",
     "gulp-util": "^3.0.8",
-    "jsdoc-to-markdown": "^6.0.1",
     "mocha": "^3.5.3",
     "mochainon": "^1.0.0",
     "mock-fs": "^4.12.0",
